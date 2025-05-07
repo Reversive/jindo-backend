@@ -13,7 +13,7 @@ func main() {
 	novelService := services.NewNovelService(novelRepository)
 	novelHandler := handlers.NewNovelHandler(novelService)
 
-	r.Get("/", novelHandler.GetNovels)
+	r.Post("/api/novels", novelHandler.PostNovel)
 
 	r.Run(":8080")
 	return
