@@ -25,6 +25,7 @@ func RespondWithError(
 		Message: responseError.Error(),
 	}
 
+	w.WriteHeader(code)
 	if err := json.NewEncoder(w).Encode(detail); err != nil {
 		log.Printf("CRITICAL: Failed to encode JSON error response for client: %v. Original error was Code: %d, Message: %s", err, code, responseError.Error())
 	}
