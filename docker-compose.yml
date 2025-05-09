@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: jindo
+      POSTGRES_DB: jindo
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_volume:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+
+volumes:
+  pg_volume:

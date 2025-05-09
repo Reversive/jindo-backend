@@ -2,12 +2,15 @@ package repositories
 
 import (
 	"context"
+	"fmt"
+	"os"
 
 	"github.com/Reversive/jindo/internal/models"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type NovelRepositoryImpl struct {
-	str string
+	Pool *pgxpool.Pool
 }
 
 func (nri *NovelRepositoryImpl) Create(
@@ -26,5 +29,15 @@ func (nri *NovelRepositoryImpl) Create(
 }
 
 func NewNovelRepository() NovelRepository {
-	return &NovelRepositoryImpl{str: "Hello world\n"}
+	dbpool, err := pgxpool.New(context.Background(), os.Getenv("DATABASE_URL"))
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to create connection pool: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Print("Database connection established successfully\n")
+	return &NovelRepositoryImpl{Pool: dbpool}
+}
+
+func (nri *NovelRepositoryImpl) Close() {
+	nri.Pool.Close()
 }
