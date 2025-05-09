@@ -10,6 +10,7 @@ import (
 func main() {
 	r := router.NewRouter()
 	novelRepository := repositories.NewNovelRepository()
+	defer novelRepository.Close()
 	novelService := services.NewNovelService(novelRepository)
 	novelHandler := handlers.NewNovelHandler(novelService)
 

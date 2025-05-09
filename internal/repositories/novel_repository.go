@@ -8,4 +8,5 @@ import (
 
 type NovelRepository interface {
 	Create(ctx context.Context, novel *models.Novel) (*models.Novel, error)
+	Close()
 }
