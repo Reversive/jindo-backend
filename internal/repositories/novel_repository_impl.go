@@ -28,8 +28,8 @@ func (nri *NovelRepositoryImpl) Create(
 	}, nil
 }
 
-func NewNovelRepository() NovelRepository {
-	dbpool, err := pgxpool.New(context.Background(), os.Getenv("DATABASE_URL"))
+func NewNovelRepository(url string) NovelRepository {
+	dbpool, err := pgxpool.New(context.Background(), url)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to create connection pool: %v\n", err)
 		os.Exit(1)
